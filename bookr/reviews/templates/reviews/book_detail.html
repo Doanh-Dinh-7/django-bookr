@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="m-3">
+    <h2>Book Details</h2>
+    <hr>
+    <span class="text-info">Title: </span>
+    <span>{{ book.title }}</span>
+    <br>
+    <span class="text-info">Publisher: </span>
+    <span>{{ book.publisher }}</span>
+    <br>
+    <span class="text-info">Publication Date: </span>
+    <span>{{ book.publication_date }}</span>
+    <br>
+    <span class="text-info">Rating: </span>
+    <span class="badge badge-primary badge-pill">{{ book_rating }}</span>
+    <br>
+    <hr>
+
+    <!-- Nút Add Review -->
+    <a href="{% url 'review_create' book.pk %}" class="btn btn-primary mb-3">Add Review</a>
+
+    <h3>Review Comments</h3>
+    <ul class="list-group">
+        {% for review in reviews %}
+            <li class="list-group-item">
+                <span class="text-info">Review comment:</span> <span>{{ review.content }}</span>
+                <br>
+                <span class="text-info">Created on:</span> <span>{{ review.date_created }}</span>
+                <br>
+                <span class="text-info">Modified on:</span> <span>{{ review.date_edited }}</span>
+                <br>
+                <span class="text-info">Rating:</span>
+                <span class="badge badge-secondary badge-pill">{{ review.rating }}</span>
+                <br>
+                <span class="text-info">Creator:</span> <span>{{ review.creator.email }}</span>
+                <br>
+
+                <!-- Nút Edit Review -->
+                <a href="{% url 'review_edit' book.pk review.pk %}" class="btn btn-sm btn-outline-secondary mt-2">Edit Review</a>
+            </li>
+        {% empty %}
+            <p>No reviews available.</p>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
